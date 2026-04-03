@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modul 10 - AJAX</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 40%, #e3f2fd 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card-main {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(180,140,210,0.15);
+    }
+
+    .page-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #5c3d8f;
+      margin-bottom: 4px;
+    }
+    .page-sub {
+      font-size: 0.82rem;
+      color: #a08abf;
+      margin-bottom: 2rem;
+    }
+
+    .btn-fetch {
+      background: linear-gradient(135deg, #ce93d8, #90caf9);
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-fetch:hover {
+      opacity: 0.88;
+      transform: translateY(-2px);
+    }
+
+    #hasil-profil {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .profil-card {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(200,180,230,0.35);
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      animation: fadeUp 0.3s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .profil-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .av-1 { background: #f8bbd0; color: #ad1457; }
+    .av-2 { background: #b2ebf2; color: #00838f; }
+    .av-3 { background: #d1c4e9; color: #512da8; }
+
+    .profil-info { font-size: 0.875rem; color: #4a3a6a; }
+    .profil-info strong { font-weight: 700; display: block; margin-bottom: 2px; }
+    .profil-info span  { color: #9e8abf; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <div class="card-main">
+    <div class="page-title">✨ Demo AJAX</div>
+    <div class="page-sub">Modul 10 — Mengambil data dari server tanpa reload</div>
+
+    <button class="btn-fetch" id="btnTampilkan">
+      Tampilkan Profil
+    </button>
+
+    <div id="hasil-profil"></div>
+  </div>
+
+  <script>
+    const avatarClass = ['av-1', 'av-2', 'av-3'];
+
+    document.getElementById('btnTampilkan').addEventListener('click', function () {
+      const container = document.getElementById('hasil-profil');
+      container.innerHTML = '<p style="color:#a08abf;font-size:0.85rem;margin:0">Mengambil data...</p>';
+
+      fetch('data.php')
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          container.innerHTML = '';
+
+          data.forEach(function (orang, i) {
+            const initials = orang.nama.split(' ').map(function(w){ return w[0]; }).join('').toUpperCase();
+            const card = document.createElement('div');
+            card.className = 'profil-card';
+            card.style.animationDelay = (i * 0.1) + 's';
+            card.innerHTML =
+              '<div class="profil-avatar ' + avatarClass[i % 3] + '">' + initials + '</div>' +
+              '<div class="profil-info">' +
+                '<strong>' + orang.nama + '</strong>' +
+                '<span>' + orang.pekerjaan + ' &nbsp;&middot;&nbsp; \uD83D\uDCCD ' + orang.lokasi + '</span>' +
+              '</div>';
+            container.appendChild(card);
+          });
+        })
+        .catch(function () {
+          container.innerHTML = '<p style="color:#e57373;font-size:0.85rem;margin:0">Gagal mengambil data. Pastikan data.php sudah ada dan XAMPP menyala.</p>';
+        });
+    });
+  </script>
+
+</body>
+</html>
