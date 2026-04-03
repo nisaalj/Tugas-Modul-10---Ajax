@@ -269,7 +269,7 @@ Ketika tombol **Tampilkan Profil** diklik, JavaScript menjalankan `fetch('data.p
 # 1. Pastikan XAMPP sudah terinstal dan Apache sudah aktif
 
 # 2. Salin folder project ke direktori htdocs XAMPP
-#    Contoh: C:\xampp\htdocs\Tugas-Modul-10---Ajax\
+#    Contoh: C:\xampp\htdocs\tugas-ajax
 
 # 3. Buka browser dan akses aplikasi
 http://localhost/tugas-ajax/index.html
