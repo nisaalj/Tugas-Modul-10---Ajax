@@ -260,7 +260,7 @@ Saat aplikasi dibuka di browser melalui XAMPP pada alamat `http://localhost/tuga
 ### 4.2 Tampilan Setelah Tombol Diklik
 Ketika tombol **Tampilkan Profil** diklik, JavaScript menjalankan `fetch('data.php')` untuk mengambil data dari server secara asinkron. Setelah data berhasil diterima dalam format JSON, tiga kartu profil muncul satu per satu dengan animasi fade-up di dalam `div#hasil-profil`. Setiap kartu menampilkan avatar inisial nama berwarna pastel, nama lengkap, pekerjaan, dan lokasi. Proses ini berlangsung tanpa reload halaman sama sekali, yang merupakan inti dari konsep AJAX.
 
-![Tampilan Setelah Tombol Diklik](ss0003.png)
+![Tampilan Setelah Tombol Diklik](ss0002.png)
 
 ---
 
